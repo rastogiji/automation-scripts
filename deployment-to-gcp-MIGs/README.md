@@ -14,4 +14,4 @@ Please refer to other directories in this repository for sample Packer configura
 We are looking for pull requests to templatize the yaml file.
 
 ## License
-[MIT]()
+[MIT](../LICENSE)
