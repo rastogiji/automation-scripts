@@ -1,0 +1,77 @@
+name: CI/CD Pipeline
+on:
+  push:
+    branches: [devops]
+
+jobs:
+  packer-build:
+    runs-on: ubuntu-latest
+    steps:
+    # Checking out the source Code
+      - name: Checkout the Source Code
+        uses: "actions/checkout@v3"
+        with:
+          ref: devops
+
+      - name: Configure Authentication with GCP
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.ACTIONS_SA_KEY }}"
+
+      - name: Build AMI
+        uses: "hashicorp/packer-github-actions@master"
+        with:
+          command: build
+          arguments: "-color=false -on-error=abort"
+          target: main.json
+          working_directory: .github/iac/
+
+  deployment:
+    needs: packer-build
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1
+      - name: Checkout the Source Code
+        uses: "actions/checkout@v3"
+        with:
+          ref: devops
+
+      #Step 2
+      - name: Configure Authentication with GCP
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.ACTIONS_SA_KEY }}"
+
+      - name: Setup Cloud SDK
+        uses: "google-github-actions/setup-gcloud@v0"
+
+      - name: Generate uuid
+        id: uuid
+        run: |
+          echo "::set-output name=UUID::$(cat /proc/sys/kernel/random/uuid | sed 's/[-]//g' | head -c 20; echo;)"
+      - name: Create a new instance template
+        run: |
+          gcloud compute instance-templates create my-instance-template-${{steps.uuid.outputs.UUID}} \
+          --project=project-id \
+          --machine-type=e2-custom-4-8192 \
+          --network-interface=subnet=subnet-name,no-address \
+          --metadata-from-file=startup-script=.github/scripts/startup.sh \
+          --service-account=compute-sa@project-id.iam.gserviceaccount.com \
+          --boot-disk-device-name=my-instance-disk-${{steps.uuid.outputs.UUID}} \
+          --boot-disk-size=30GB \
+          --boot-disk-type=pd-balanced \
+          --scopes=cloud-platform \
+          --image-family=my-images \
+          --region=asia-south1
+      - name: Install gcloud beta components
+        run: |
+          gcloud components install beta
+      - name: Update existing Instance group
+        run: |
+          gcloud beta compute instance-groups managed rolling-action start-update my-mig \
+          --project=project-id \
+          --type='proactive' \
+          --max-surge=3 \
+          --max-unavailable=0 \
+          --version=template=my-instance-template-${{steps.uuid.outputs.UUID}} \
+          --region=asia-south1
