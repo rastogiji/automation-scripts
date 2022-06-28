@@ -32,8 +32,8 @@ This is WIP tool which only has limited coverage as of now. We have planned to a
 - [x] VM Instance Deletion
 - [x] VM Instance Stoppage
 - [x] Unattached Disk Deletion
+- [x] Releasing Unused IP addresses.
 - [ ] SQL Instance Stoppage
-- [ ] Releasing Unused IP addresses.
 - [ ] Reducing MIG size
 
 ## License
