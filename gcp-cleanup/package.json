@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Node js CLI to clean up GCP resources.",
   "main": "index.js",
-  "bin":{
+  "bin": {
     "gcp-cleanup": "/bin/gcp-cleanup.js"
   },
   "scripts": {
@@ -16,6 +16,7 @@
     "colors": "^1.4.0",
     "commander": "^9.3.0",
     "inquirer": "^9.0.0",
-    "util": "^0.12.4"
+    "util": "^0.12.4",
+    "uuid": "^8.3.2"
   }
 }
