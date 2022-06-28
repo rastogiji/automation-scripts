@@ -13,12 +13,12 @@ const compute = program
   .command("compute")
   .description("Cleanup of Compute Engine Resources");
 
-// gcp-cleaner compute instances
+// gcp-cleanup compute instances
 const instances = compute
   .command("instances")
   .description("Cleaning Up for Compute Engine Instances");
 
-// gcp-cleaner compute instances delete --hour 12
+// gcp-cleanup compute instances delete --hour 12
 instances
   .command("delete")
   .description("Deletes Long Running Compute Engine Instances")
@@ -30,7 +30,7 @@ instances
     instanceDelete(options);
   });
 
-// gcp-cleaner compute instances stop --hour 12
+// gcp-cleanup compute instances stop --hour 12
 instances
   .command("stop")
   .description("Stops Long Running Compute Engine Instances")
@@ -43,14 +43,14 @@ instances
     instanceStop(options);
   });
 
-// gcp-cleaner compute disks
+// gcp-cleanup compute disks
 const disks = compute
   .command("disks")
   .description("Cleaning Up Unattached compute Engine Disks");
 
-// gcp-cleaner compute disks delete
+// gcp-cleanup compute disks delete
 disks
   .command("delete")
-  .description("Delete Unattached Disks")
+  .description("Create Snapshot and Delete Unattached Disks")
   .action(diskDelete);
 program.parse(process.argv);
