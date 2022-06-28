@@ -31,7 +31,6 @@ const instanceCleanup = async (instances, hourThreshold) => {
     const delta = currTime - instanceStartTime;
     const hoursRunning = Math.floor(delta / (60e3 * 60));
     console.log("hoursRunning: " + hoursRunning);
-    console.log("hourThreshold: " + hourThreshold);
 
     // Deleting Instances which have been running longer than 24 hours.
     if (hoursRunning >= hourThreshold) {
