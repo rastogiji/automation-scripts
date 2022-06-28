@@ -1,13 +1,13 @@
 {
   "name": "gcp-cleanup",
   "version": "1.0.0",
-  "description": "Cloud Run Service to Delete/Stop Long Running Resources on GCP. This script runs every 24 hours and cleans up resources that have been in the Running State for longer than 24 hours.",
+  "description": "Node js CLI to clean up GCP resources.",
   "main": "index.js",
   "bin":{
-    "gcp-cleaner": "/bin/gcp-cleaner.js"
+    "gcp-cleanup": "/bin/gcp-cleanup.js"
   },
   "scripts": {
-    "start": "node bin/gcp-cleaner.js"
+    "start": "node bin/gcp-cleanup.js"
   },
   "author": "Animesh Rastogi",
   "license": "MIT",
