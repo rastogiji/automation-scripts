@@ -19,12 +19,11 @@ jobs:
           credentials_json: "${{ secrets.ACTIONS_SA_KEY }}"
 
       - name: Build AMI
-        uses: "hashicorp/packer-github-actions@master"
+        uses: "rastogiji/gcp-packer-github-actions@v1.0.1"
         with:
-          command: build
-          arguments: "-color=false -on-error=abort"
-          target: main.json
-          working_directory: .github/iac/
+          main_file: main.json
+          variable_file: variables.json
+          working_directory: .github/packer/
 
   deployment:
     needs: packer-build
