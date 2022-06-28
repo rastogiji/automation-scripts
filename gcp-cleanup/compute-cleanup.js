@@ -20,23 +20,27 @@ const listInstances = async () => {
 // Function to Delete All Instances which have been running for more than 24 hours.
 const instanceCleanup = async (instances) => {
   instances.forEach(async (instance) => {
+    // Fetching Instance Details
     const { stdout, stderr } = await exec(
       `gcloud compute instances describe ${instance.name} --zone=${instance.zone} --format="json(name,lastStartTimestamp)"`
     );
     const instanceDetails = JSON.parse(stdout);
+
+    // Calulating Hours since instance was last started.
     const currTime = new Date();
     const instanceStartTime = new Date(instanceDetails.lastStartTimestamp);
     const delta = currTime - instanceStartTime;
-    console.log("delta: " + delta);
     const hoursRunning = Math.floor(delta / (60e3 * 60));
     console.log("hoursRunning: " + hoursRunning);
+
+    // Deleting Instances which have been running longer than 24 hours.
     if (hoursRunning >= 24) {
       await exec(
         `gcloud compute instances delete ${instance.name} --zone=${instance.zone} --quiet`
       );
       console.log(`${instance.name} Deleted`);
     } else {
-      console.log("Lifetime not exceeded");
+      console.log("Instance Lifetime not exceeded");
     }
   });
 };
