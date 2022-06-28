@@ -34,14 +34,14 @@ const instanceCleanup = async (instances, hourThreshold) => {
 
     // Deleting Instances which have been running longer than 24 hours.
     if (hoursRunning >= hourThreshold) {
+      console.log(`Stopping ${instance.name}...`);
       await exec(
         `gcloud compute instances stop ${instance.name} --zone=${instance.zone} --quiet`
       );
-      console.log(`${instance.name} Stopped`);
-    } else {
-      console.log("Instance Lifetime not exceeded");
+      console.log(`${instance.name} Successfully Stopped`);
     }
   });
+  console.log("Operation Successful");
 };
 
 module.exports = instanceStop;

@@ -17,9 +17,7 @@ const diskDelete = async () => {
 
 const diskCleanup = async (disks) => {
   disks.forEach(async (disk) => {
-    let pointer = 0;
     if (disk.lastAttachTimestamp === undefined) {
-      pointer++;
       console.log(`${disk.name} is Unattached. Snapshotting...`);
       await exec(
         `gcloud compute disks snapshot ${disk.name} \
@@ -32,10 +30,8 @@ const diskCleanup = async (disks) => {
       );
       console.log("Disk Successfully Deleted");
     }
-    if (pointer === 0) {
-      console.log("All Disks are Attached");
-    }
   });
+  console.log("Operation Successful");
 };
 
 module.exports = diskDelete;
