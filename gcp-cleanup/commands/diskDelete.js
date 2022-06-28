@@ -9,7 +9,7 @@ const diskDelete = async () => {
   );
 
   // Parsing JSON response
-  const disks = JSON.parse(stdout);
+  const disks = await JSON.parse(stdout);
 
   if (disks.length > 0) {
     diskCleanup(disks);
@@ -37,8 +37,6 @@ const diskCleanup = async (disks) => {
       console.log("Disk Successfully Deleted");
     }
   });
-
-  console.log("Operation Successful");
 };
 
 module.exports = diskDelete;

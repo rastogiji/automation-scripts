@@ -9,7 +9,7 @@ const instanceStop = async (options) => {
   );
 
   // Parsing JSON data
-  instances = JSON.parse(stdout);
+  instances = await JSON.parse(stdout);
   if (instances.length > 0) {
     instanceCleanup(instances, hourThreshold);
   } else {
@@ -23,7 +23,7 @@ const instanceCleanup = async (instances, hourThreshold) => {
     const { stdout, stderr } = await exec(
       `gcloud compute instances describe ${instance.name} --zone=${instance.zone} --format="json(name,lastStartTimestamp)"`
     );
-    const instanceDetails = JSON.parse(stdout);
+    const instanceDetails = await JSON.parse(stdout);
 
     // Calulating Hours since instance was last started.
     const currTime = new Date();
@@ -41,7 +41,6 @@ const instanceCleanup = async (instances, hourThreshold) => {
       console.log(`${instance.name} Successfully Stopped`);
     }
   });
-  console.log("Operation Successful");
 };
 
 module.exports = instanceStop;
