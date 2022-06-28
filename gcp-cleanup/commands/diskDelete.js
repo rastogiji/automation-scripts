@@ -3,9 +3,12 @@ const exec = util.promisify(require("child_process").exec);
 const uuid = require("uuid");
 
 const diskDelete = async () => {
+  // Get a List of all the disks present.
   const { stdout, stderr } = await exec(
     `gcloud compute disks list --format="json(name,lastAttachTimestamp,zone.basename())"`
   );
+
+  // Parsing JSON response
   const disks = JSON.parse(stdout);
 
   if (disks.length > 0) {
@@ -15,6 +18,7 @@ const diskDelete = async () => {
   }
 };
 
+// Creates Snopshot of all unattached Disks and Deletes them.
 const diskCleanup = async (disks) => {
   disks.forEach(async (disk) => {
     if (disk.lastAttachTimestamp === undefined) {
@@ -23,14 +27,17 @@ const diskCleanup = async (disks) => {
         `gcloud compute disks snapshot ${disk.name} \
         --zone=${disk.zone} --snapshot-names=${disk.name}-snapshot-${uuid.v4()}`
       );
+
       console.log("Successfully created the snapshot");
       console.log("Deleting...");
+
       await exec(
         `gcloud compute disks delete ${disk.name} --zone=${disk.zone} --quiet`
       );
       console.log("Disk Successfully Deleted");
     }
   });
+
   console.log("Operation Successful");
 };
 
