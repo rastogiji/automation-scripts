@@ -18,7 +18,7 @@ const addressDelete = async () => {
 
 const addressCleanup = (addresses) => {
   addresses.forEach(async (address) => {
-    console.log(`Release Static IP address ${address.name}...`);
+    console.log(`Releasing Static IP address ${address.name}...`);
 
     // Check if the Address is Global
     if (address.region === undefined) {

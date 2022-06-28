@@ -6,6 +6,7 @@ const pkg = require("../package.json");
 const instanceDelete = require("../commands/instanceDelete");
 const instanceStop = require("../commands/instanceStop");
 const diskDelete = require("../commands/diskDelete");
+const addressDelete = require("../commands/addressDelete");
 
 program.version(pkg.version);
 
@@ -53,4 +54,17 @@ disks
   .command("delete")
   .description("Create Snapshot and Delete Unattached Disks")
   .action(diskDelete);
+
+// gcp-cleanup compute addresses
+
+const addresses = compute
+  .command("addresses")
+  .description("Cleaning Up Unutilised IP Addresses");
+
+// gcp-cleanup compute addresses delete
+addresses
+  .command("delete")
+  .description("Releasing Unattached Static External IP addresses")
+  .action(addressDelete);
+
 program.parse(process.argv);
