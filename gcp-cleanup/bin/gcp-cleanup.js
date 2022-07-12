@@ -7,9 +7,14 @@ const instanceDelete = require("../commands/instanceDelete");
 const instanceStop = require("../commands/instanceStop");
 const diskDelete = require("../commands/diskDelete");
 const addressDelete = require("../commands/addressDelete");
+const sqlStop = require("../commands/sqlStop");
 
 program.version(pkg.version);
+program.description(
+  "A Command Line utility to clean up your GCP resources. This can be used a great cost control measure for your Dev/Sandbox environments."
+);
 
+// Definition of Commands for Compute Group
 const compute = program
   .command("compute")
   .description("Cleanup of Compute Engine Resources");
@@ -66,5 +71,19 @@ addresses
   .command("delete")
   .description("Releasing Unattached Static External IP addresses")
   .action(addressDelete);
+
+// Definition of Commands for SQL Group
+const sql = program
+  .command("sql")
+  .description("Cleanup of Cloud SQL Resources");
+
+const sqlInstances = sql
+  .command("instances")
+  .description("Cleanup of Cloud SQL Instances");
+
+sqlInstances
+  .command("stop")
+  .description("Stops Running Cloud SQL Instances")
+  .action(sqlStop);
 
 program.parse(process.argv);
