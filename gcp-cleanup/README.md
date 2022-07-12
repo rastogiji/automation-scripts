@@ -25,6 +25,14 @@ Now you should be able to use gcp-cleanup in your environment as well. Test it o
 gcp-cleanup -V
 ```
 
+## Usage
+
+gcp-cleanup is designed to syntactically mirror [gcloud](https://cloud.google.com/sdk/gcloud/reference) commands. Synopsis:
+
+```bash
+gcp-cleanup GROUP COMMAND [OPTIONAL FLAGS]
+```
+
 ## Status Tracking
 
 This is WIP tool which only has limited coverage as of now. We have planned to add the following features in the coming month(July).
@@ -33,7 +41,7 @@ This is WIP tool which only has limited coverage as of now. We have planned to a
 - [x] VM Instance Stoppage
 - [x] Unattached Disk Deletion
 - [x] Releasing Unused IP addresses.
-- [ ] SQL Instance Stoppage
+- [x] SQL Instance Stoppage
 - [ ] Reducing MIG size
 
 ## License
