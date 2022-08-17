@@ -35,7 +35,7 @@ gcp-cleanup GROUP COMMAND [OPTIONAL FLAGS]
 
 ## Status Tracking
 
-This is WIP tool which only has limited coverage as of now. We have planned to add the following features in the coming month(July).
+This is WIP tool which only has limited coverage as of now. We have planned to add the following features in the coming month.
 
 - [x] VM Instance Deletion
 - [x] VM Instance Stoppage
