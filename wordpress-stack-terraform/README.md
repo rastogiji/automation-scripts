@@ -12,7 +12,7 @@ Terraform Module to Deploy the entire Wordpress stack on a GCP VM. The resources
 
 ```HCL
 module "wordpress_server" {
-  source           = ""
+  source           = "https://github.com/rastogiji/automation-scripts/tree/master/wordpress-stack-terraform"
   instance_name    = "wordpress-test"
   instance_purpose = "testing"
   sa_email         = var.sa_email
@@ -31,3 +31,13 @@ module "wordpress_server" {
   }
 }
 ```
+
+## Inputs
+
+| Name          | Description                                    | Type         | Default            | Required |
+| ------------- | ---------------------------------------------- | ------------ | ------------------ | -------- |
+| instance_name | Name of the Instance                           | string       | null               | yes      |
+| instance_zone | Zone in which to launch the instance           | string       | europe-west3-c     | no       |
+| instance_type | GCP Instance Type to be launched               | string       | e2-micro           | no       |
+| vpc_network   | VPC Network in which the instance is launched. | string       | default            | no       |
+| sa_scopes     | Access Scopes for the Instance                 | list(string) | ["cloud-platform"] | no       |
