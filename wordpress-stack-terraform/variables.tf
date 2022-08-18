@@ -35,7 +35,7 @@ variable "boot_disk_type" {
 variable "machine_image" {
   type        = string
   description = "Image to be used for the Instance. Could be GCP base images or images created by user"
-  default     = "ubuntu-2004-lts"
+  default     = "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/images/wordpress-v20220715"
 }
 variable "instance_purpose" {
   type        = string
