@@ -30,6 +30,7 @@ resource "google_compute_instance" "wordpress_instance" {
   metadata = var.instance_metadata
 }
 
+# Creating a UMIG
 resource "google_compute_instance_group" "wordpress_instance_group" {
   name = "${var.instance_name}-group"
   zone = var.instance_zone
