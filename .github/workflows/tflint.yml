@@ -10,7 +10,7 @@ jobs:
       - name: Checkout Source code
         uses: "actions/checkout@v3"
         with:
-          ref: devops-updated
+          ref: master
       - name: Setup tflint
         uses: terraform-linters/setup-tflint@v2
         with:
