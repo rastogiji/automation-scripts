@@ -2,8 +2,11 @@ const { faker } = require("@faker-js/faker");
 const { PubSub } = require("@google-cloud/pubsub");
 const dotenv = require("dotenv");
 
+// Loading Environment variables.
 const values = dotenv.config();
 
+// Generate Fake Transaction Data using Faker JS Library
+// What happened to Aaron Swartz?
 const generateData = () => {
   const account = faker.finance.account(8);
   const accountName = faker.finance.accountName();
@@ -25,6 +28,7 @@ const generateData = () => {
   return data;
 };
 
+// Publishing Fake Data to a PubSub Topic
 const publishMessage = async () => {
   const topicName = process.env.TOPIC_NAME;
   const projectId = process.env.PROJECT_ID;
